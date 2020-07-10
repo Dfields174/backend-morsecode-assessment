@@ -49,18 +49,57 @@ MORSE_CODE = {
 
 
 def find_mult(bits):
-    """Finds least amount of occurrences of 0 or 1"""
-    # your code here
-    return
+    smallest_zeros = len(min(
+        [group for group in bits.split('1') if group != '']
+        ))
+    smallest_ones = len(min([
+        group for group in bits.split('0') if group != '']
+        ))
+    return min(smallest_zeros, smallest_ones)
+  #  split_zeros = bits.split('1')
+   # split_ones = bits.split('0')
+    #vsplit_ones = bits.split('0')
+  # 
+   # for bit in split_ones:
+    #    if bit != '':
+     #       if len(bit) < shortest_ones:
+      #          shortest_ones = len(bit)
+    # return shortest_ones
+
+
+        
+   # words_ones = bits.split('00' * 7)
+    #chars_ones = []
+    #for words in words_ones:
+     #   chars_ones.append(words.split('00' * 3))
+    #print(chars_ones)
 
 
 def decodeBits(bits):
     """Translate a string of 1's & 0's to dots and dashes"""
-    # your code here
-    return
-
+    time_unit = find_mult(bits)
+    words = bits.split ('0' * time_unit * 7)
+    result = []
+    for word in words: 
+        letters = word.split('0' * time_unit * 3)
+        dots_dashes = []
+    for letter in letters: 
+        dots_dashes.append(letter.split('0' * time_unit))
+    result.append(dots_dashes)
+    return result
+        
 
 def decodeMorse(morse_code):
     """Translates a string of dots and dashes to human readable text"""
-    # your code here
-    return
+    morse_words = morse_code.split('   ')
+    decoded_words = []
+    for morse_word in morse_words:
+        for morse_letter in morse_word.split():
+            decoded_words.append(MORSE_CODE[morse_letter])
+        decoded_words.append(' ')
+    return ''.join(decoded_words).strip()
+
+print(find_mult('1100110011001100000011000000111111001100111111001111110000000000000011001111110011111100111111000000110011001111110000001111110011001100000011'))
+#print(decodeBits('1100110011001100000011000000111111001100111111001111110000000000000011001111110011111100111111000000110011001111110000001111110011001100000011'))
+# print('···· · −·−−   ·−−− ··− −·· ·')
+# print(decodeMorse('.... . -.--   .--- ..- -.. .'))
